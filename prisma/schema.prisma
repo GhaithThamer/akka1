@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// ```bash
+// npx prisma db push
+// ```
+
+// ```bash
+// npx prisma studio
+
+//node prisma/seed
+
+//npx prisma db push
+
+// npx prisma generate
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Firm {
+  firmShortName String   @id
+  firmName      String
+  address       String
+  latitude      Float
+  longitude     Float
+  description   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  containers    Container[]
+  fromTransfers ContainerTransfer[] @relation("FromFirm")
+  toTransfers   ContainerTransfer[] @relation("ToFirm")
+}
+
+model Container {
+  id          String   @id @default(uuid())
+  recordNo    String   @unique
+  number      String   @unique
+  type        String
+  color       String?
+  photo       String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  firm              Firm?               @relation(fields: [firmId], references: [firmShortName])
+  firmId            String
+  ContainerTransfer ContainerTransfer[]
+}
+
+
+
+model ContainerTransfer {
+  id           String    @id @default(uuid())
+  transferDate DateTime
+  description  String
+  person       User      @relation("UserToContainerTransfer", fields: [personId], references: [id])
+  personId     String
+  container    Container @relation(fields: [containerId], references: [id])
+  containerId  String
+  from         Firm      @relation("FromFirm", fields: [fromFirmId], references: [firmShortName])
+  fromFirmId   String
+  to           Firm      @relation("ToFirm", fields: [toFirmId], references: [firmShortName])
+  toFirmId     String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+  deletedBy    String?
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  deletedBy String?
+
+  containerTransfers ContainerTransfer[] @relation("UserToContainerTransfer")
+  userRole          UserRole?           @relation(fields: [userRoleId], references: [id])
+  userRoleId        String?
+}
+model UserRole {
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  deletedBy String?
+
+  users     User[]
+}

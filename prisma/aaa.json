@@ -1,0 +1,92 @@
+[
+  {
+    "recordNo": "AK26001",
+    "number": "1",
+    "type": "compak",
+    "color": null,
+    "photo": null,
+    "description": "aciklama1",
+    "firmId": "akka"
+  },
+  {
+    "recordNo": "AK26002",
+    "number": "2",
+    "type": "buyuk",
+    "color": null,
+    "photo": null,
+    "description": "aciklama2",
+    "firmId": "a101"
+  },
+  {
+    "recordNo": "AK26003",
+    "number": "3",
+    "type": "kuçuk",
+    "color": null,
+    "photo": null,
+    "description": "aciklama3",
+    "firmId": "migros"
+  },
+  {
+    "recordNo": "AK26004",
+    "number": "4",
+    "type": "kafes",
+    "color": null,
+    "photo": null,
+    "description": "aciklama4",
+    "firmId": "arcelik"
+  },
+  {
+    "recordNo": "AK26005",
+    "number": "5",
+    "type": "compak",
+    "color": null,
+    "photo": null,
+    "description": "aciklama5",
+    "firmId": "arcelik"
+  },
+  {
+    "recordNo": "AK26006",
+    "number": "6",
+    "type": "buyuk",
+    "color": null,
+    "photo": null,
+    "description": "aciklama6",
+    "firmId": "bim"
+  },
+  {
+    "recordNo": "AK26007",
+    "number": "7",
+    "type": "kuçuk",
+    "color": null,
+    "photo": null,
+    "description": "aciklama7",
+    "firmId": "arcelik"
+  },
+  {
+    "recordNo": "AK26008",
+    "number": "8",
+    "type": "kafes",
+    "color": null,
+    "photo": null,
+    "description": "aciklama8",
+    "firmId": "a101"
+  },
+  {
+    "recordNo": "AK26009",
+    "number": "9",
+    "type": "compak",
+    "color": null,
+    "photo": null,
+    "description": "aciklama9",
+    "firmId": "bim"
+  },
+  {
+    "recordNo": "AK26010",
+    "number": "10",
+    "type": "buyuk",
+    "color": null,
+    "photo": null,
+    "description": "aciklama10",
+    "firmId": "bim"
+  }
+]
