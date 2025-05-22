@@ -12,7 +12,9 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <div>firms: {JSON.stringify(firms)}</div>
+      <div
+      className="text-2xl font-bold mb-4"
+      >firms: {JSON.stringify(firms)}</div>
       <br />
       <div>containers: {JSON.stringify(containers)}</div>
       <br />
