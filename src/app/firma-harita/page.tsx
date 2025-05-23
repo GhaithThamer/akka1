@@ -10,7 +10,12 @@ export default async function FirmaHarita() {
       },
     })) ?? [];
 
-  const containers = (await prisma.container.findMany()) ?? [];
+  const containers =
+    (await prisma.container.findMany({
+      orderBy: {
+        recordNo: "asc",
+      },
+    })) ?? [];
 
   // In your component
 

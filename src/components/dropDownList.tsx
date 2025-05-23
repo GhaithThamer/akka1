@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Option {
   value: string;
@@ -31,31 +31,36 @@ const DropDownList: React.FC<DropdownProps> = ({
     console.log("Selected value:", value);
   };
 
+
   return (
-    <select
-      value={selectedValue}
-      onChange={handleChange}
-      disabled={disabled}
-      className={
-        "dropdown-select border border-gray-300 rounded p-2" +
-        (selectedValue === defaultValue ? " text-green-500 " : " text-yellow-500 ")
-      }
-    >
-      <option value="" disabled>
-        {defaultLabel}
-      </option>
-      {options.map((option) => (
-        <option
-          key={option.value}
-          value={option.value}
-          className={
-            option.label === defaultLabel ? "text-green-500" : "text-black"
-          }
-        >
-          {option.label}
+    <div>
+      <select
+        value={selectedValue}
+        onChange={handleChange}
+        disabled={disabled}
+        className={
+          "dropdown-select border border-gray-300 rounded p-2" +
+          (selectedValue === defaultValue
+            ? " text-green-500 "
+            : " text-yellow-500 ")
+        }
+      >
+        <option value="" disabled>
+          {defaultLabel}
         </option>
-      ))}
-    </select>
+        {options.map((option) => (
+          <option
+            key={option.value}
+            value={option.value}
+            className={
+              option.label === defaultLabel ? "text-green-500" : "text-black"
+            }
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 

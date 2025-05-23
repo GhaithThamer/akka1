@@ -12,7 +12,7 @@ interface MapProps {
   zoom?: number;
 }
 
-export default function MapComponent({ firms, center, zoom = 13 }: MapProps) {
+export default function MapComponent({ firms, center, zoom = 12 }: MapProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function MapComponent({ firms, center, zoom = 13 }: MapProps) {
   const mapCenter: [number, number] =
     center ||
     (firms.length > 0
-      ? [firms[0].latitude, firms[0].longitude]
+      ? [firms[0].latitude+0.015, firms[0].longitude-0.1]
       : [51.505, -0.09]);
 
   const shadowIcon = useMemo(() => {

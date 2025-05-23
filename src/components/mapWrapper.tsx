@@ -2,14 +2,14 @@
 
 import { Container, Firm } from "@prisma/client";
 import dynamic from "next/dynamic";
-import DropDownList from "./dropDownList";
 import { useEffect, useState } from "react";
+import ContainerSaveForm from "./containerSaveForm";
 // import MapComponent from "@/components/MapComponent";
 
 const MapComponent = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
   loading: () => (
-    <div className="h-[500px] flex items-center justify-center">
+    <div className="h-[500px] flex items-center justify-center ">
       Loading map...
     </div>
   ),
@@ -28,7 +28,7 @@ export default function MapWrapper({
     setMounted(true);
     return () => setMounted(false);
   }, []);
- 
+
   if (!mounted) {
     return (
       <div className="h-[500px] flex items-center justify-center">
@@ -45,31 +45,8 @@ export default function MapWrapper({
     );
   }
 
-  const dropdownOptions = firms.map((firm) => ({
-    value: firm.firmShortName,
-    label: firm.firmName,
-  }));
-
   const renderedContainers = containers.map((container) => (
-    <div
-      key={container.id}
-      className="flex flex-row gap-2 border p-2 m-2 align-bottom"
-    >
-      <div>
-        {container.recordNo}
-        <button className="bg-blue-300 text-white px-2 rounded text-sm hover:bg-blue-400">
-          Keydet
-        </button>
-      </div>
-      <DropDownList
-        options={dropdownOptions}
-        onSelect={(value) => console.log(value)}
-        defaultLabel={
-          firms.find((firm) => firm.firmShortName === container.firmId)
-            ?.firmName
-        }
-      />
-    </div>
+    <ContainerSaveForm key={container.id} container={container} firms={firms} />
   ));
 
   return (
