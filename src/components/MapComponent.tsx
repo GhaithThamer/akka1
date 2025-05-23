@@ -1,19 +1,25 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import L from "leaflet"; // Import leaflet directly
+import L from "leaflet";
 import { Container, Firm } from "@prisma/client";
 
 interface MapProps {
-  firms: (Firm&{containers:Container[]})[];
+  firms: (Firm & { containers: Container[] })[];
   center?: [number, number];
   zoom?: number;
 }
 
 export default function MapComponent({ firms, center, zoom = 13 }: MapProps) {
-  const mapCenter =
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const mapCenter: [number, number] =
     center ||
     (firms.length > 0
       ? [firms[0].latitude, firms[0].longitude]
@@ -28,8 +34,8 @@ export default function MapComponent({ firms, center, zoom = 13 }: MapProps) {
     });
   }, []);
 
-  if (typeof window === "undefined") {
-    return null;
+  if (!mounted) {
+    return <div className="h-[400px] w-[80%] mx-auto">Loading map...</div>;
   }
 
   return (
@@ -67,7 +73,7 @@ export default function MapComponent({ firms, center, zoom = 13 }: MapProps) {
                 top: -20px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: linear-gradient(to right,rgb(255, 255, 255),rgb(255, 255, 255));
+                background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255));
                 border-radius: 50%;
                 width: 20px;
                 height: 20px;
@@ -109,25 +115,26 @@ export default function MapComponent({ firms, center, zoom = 13 }: MapProps) {
               <Popup>
                 <strong style={{ fontSize: "1.2rem" }}>
                   {firm.firmName || "FirmWithContainer"}
-                </strong>{" "}
+                </strong>
                 <br />
-                <table className="table-bordered">
+                <table className="table-auto w-full mt-2">
                   <thead>
                     <tr>
-                      <th>Sicil No</th>
+                      <th className="w-60">Sicil No</th>
                       <th>Konteyner No</th>
-                      <th>Ebat</th>
+                      <th className="w-60">Ebat</th>
                       <th>Açıklama</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {firm.containers.map((container) => (
-                      <tr key={`container-${container.id}`}>
+                    {firm.containers.map((container, i) => (
+                      <tr
+                        key={`container-${container.id}`}
+                        className={i % 2 === 0 ? "bg-blue-100" : "bg-white"}
+                      >
                         <td>{container.recordNo}</td>
                         <td>{container.number}</td>
-                        <td>
-                          {container.type}
-                        </td>
+                        <td>{container.type}</td>
                         <td>{container.description}</td>
                       </tr>
                     ))}
