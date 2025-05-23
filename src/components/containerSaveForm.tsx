@@ -1,7 +1,7 @@
 import DropDownList from "./dropDownList";
 import { Firm, Container } from "@prisma/client";
 import { saveContainer } from "@/utils/actions/saveContainer";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 
 export default function ContainerSaveForm({
   container,
@@ -10,10 +10,10 @@ export default function ContainerSaveForm({
   container: Container;
   firms: Firm[];
 }) {
-  const defaultSelectedFirm = firms.find(
+  const defaultFirm = firms.find(
     (firm) => firm.firmShortName === container.firmId
   );
-  const [selectedFirm, setSelectedFirm] = useState(defaultSelectedFirm);
+  const [selectedFirm, setSelectedFirm] = useState(defaultFirm);
   const dropdownOptions = firms.map((firm) => ({
     value: firm.firmShortName,
     label: firm.firmName,
@@ -28,12 +28,12 @@ export default function ContainerSaveForm({
     }
   );
 
-  useEffect(() => {
-    //I created this useEffect after long debugging, because when the data fetching is done, the DropDownList was defaulting to the first element of the list.
-    if (defaultSelectedFirm) {
-      setSelectedFirm(defaultSelectedFirm);
-    }
-  }, [defaultSelectedFirm]);
+  //   useEffect(() => {
+  //     //I created this useEffect after long debugging, because when the data fetching is done, the DropDownList was defaulting to the first element of the list.
+  //     if (defaultFirm) {
+  //       setSelectedFirm(defaultFirm);
+  //     }
+  //   }, [defaultFirm]);
 
   const handleSelect = (value: string) => {
     const selectedFirm = firms.find((firm) => firm.firmShortName === value);
@@ -44,22 +44,34 @@ export default function ContainerSaveForm({
     setSelectedFirm(selectedFirm);
   };
 
-
   return (
     <form
       action={formAction}
-      className="flex flex-row gap-2 border p-2 m-2 align-bottom"
+      className="flex flex-row gap-2 border p-2 m-2 align-bottom  rounded"
     >
-      <div>
+      <div className=" w-20">
         {container.recordNo}
-        <button className="bg-blue-300 text-white px-2 rounded text-sm hover:bg-blue-400">
-          Keydet
-        </button>
+
+        {selectedFirm?.firmShortName !== defaultFirm?.firmShortName ? (
+          <button
+            className={
+              " text-white px-2 rounded text-sm" +
+              (selectedFirm?.firmShortName === defaultFirm?.firmShortName
+                ? " bg-blue-300 hover:bg-blue-400"
+                : " bg-red-300 hover:bg-red-400")
+            }
+          >
+            Kaydet
+          </button>
+        ) : null}
       </div>
       <DropDownList
         options={dropdownOptions}
         onSelect={handleSelect}
-        defaultLabel={defaultSelectedFirm?.firmName}
+        defaultOption={{
+          value: defaultFirm?.firmShortName ?? "",
+          label: defaultFirm?.firmName ?? "",
+        }}
       />
       <div>{formState.message}</div>
     </form>
