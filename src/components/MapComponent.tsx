@@ -22,7 +22,7 @@ export default function MapComponent({ firms, center, zoom = 12 }: MapProps) {
   const mapCenter: [number, number] =
     center ||
     (firms.length > 0
-      ? [firms[0].latitude+0.015, firms[0].longitude-0.1]
+      ? [firms[0].latitude + 0.015, firms[0].longitude - 0.1]
       : [51.505, -0.09]);
 
   const shadowIcon = useMemo(() => {
@@ -35,14 +35,14 @@ export default function MapComponent({ firms, center, zoom = 12 }: MapProps) {
   }, []);
 
   if (!mounted) {
-    return <div className="h-[400px] w-[80%] mx-auto">Loading map...</div>;
+    return <div className="h-full w-[80%] mx-auto">Loading map...</div>;
   }
 
   return (
     <MapContainer
       center={mapCenter}
       zoom={zoom}
-      style={{ height: "400px", width: "80%", margin: "0 auto" }}
+      style={{ height: "full", width: "80%", margin: "0 auto" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -47,7 +47,7 @@ export default function ContainerSaveForm({
   return (
     <form
       action={formAction}
-      className="flex flex-row gap-2 border p-2 m-2 align-bottom  rounded"
+      className="flex flex-row gap-2 border p-2 my-1 align-bottom  rounded"
     >
       <div className=" w-20">
         {container.recordNo}

@@ -20,12 +20,12 @@ export default async function FirmaHarita() {
   // In your component
 
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto p-4 h-screen  flex flex-col">
       <h1 className="text-2xl font-bold mb-4">
         AKKA ÇEVRE ATIK YÖNETİMİ SAN. Ve TİC. A.Ş. KONTEYNER YERLERİ
       </h1>
 
-      <div className="h-[500px] w-full">
+      <div className=" h-full  w-full">
         <MapWrapper firms={firms_with_container} containers={containers} />
       </div>
     </main>
